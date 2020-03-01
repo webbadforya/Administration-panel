@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>FormData</title>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <form
+      id="myForm"
+      name="myForm"
+      class="form-group d-flex justify-content-around bg-secondary"
+    >
+      <div>
+        <label for="productName">Product Name:</label>
+        <input
+          type="text"
+          id="productName"
+          name="productName"
+          class="form-control mb-2"
+        />
+      </div>
+      <div>
+        <label for="productNumber">Product Number:</label>
+        <input
+          type="text"
+          id="productNumber"
+          name="productNumber"
+          class="form-control mb-2"
+        />
+      </div>
+      <input type="submit" value="Add" class="btn btn-primary m-2" />
+    </form>
+    <div class="products"></div>
+    <script>
+      let [products] = document.getElementsByClassName('products');
+      let myForm = document.getElementById('myForm');
+      myForm.addEventListener('submit', ev => {
+        ev.preventDefault();
+        let data = formData(myForm);
+        console.log(data);
+        if (data)
+          sendData(data)
+            .then(res => res.json())
+            .then(data => showInDOM(data, parent));
+      });
+    </script>
+  </body>
+</html>
