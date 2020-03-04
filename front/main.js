@@ -1,7 +1,7 @@
 class ProductNameValidation {
   static criteria = 'productName';
   static validation(inputValue) {
-    return inputValue.length < 15;
+    return inputValue.length > 0 && inputValue.length < 15;
   }
 }
 
@@ -37,7 +37,7 @@ class CreateElement {
 class createParentDiv {
   static init() {
     let parent = new CreateElement('div');
-    parent.className = 'parent';
+    parent.className = 'parent d-flex justify-content-around';
     AppendToDOM.appendTo(products, parent.currentElement);
     return parent.currentElement;
   }
@@ -60,22 +60,29 @@ function formData(myForm) {
 }
 
 function sendData(obj) {
-  return fetch('http://localhost:3000/userdata', {
-    method: 'POST',
+  return fetch('http://localhost:3000/addproduct', {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify(obj),
   });
 }
+
+function getAllData() {
+  return fetch('http://localhost:3000/showallproducts');
+}
+
 function showInDOM(data) {
-  let parent = createParentDiv.init();
-  console.log(parent);
-  for (let key of Object.keys(data)) {
-    let child = new CreateElement('div');
-    child.className = key;
-    child.innerHtml = data[key];
-    AppendToDOM.appendTo(parent, child.currentElement);
-    console.log(child.currentElement);
-  }
+  data.forEach(item => {
+    let parent = createParentDiv.init();
+    let child1 = new CreateElement('div');
+    child1.className = 'productName';
+    child1.innerHtml = item.productName;
+    AppendToDOM.appendTo(parent, child1.currentElement);
+    let child2 = new CreateElement('div');
+    child2.className = 'productNumber';
+    child2.innerHtml = item.productNumber;
+    AppendToDOM.appendTo(parent, child2.currentElement);
+  });
 }

@@ -16,19 +16,19 @@
     <form
       id="myForm"
       name="myForm"
-      class="form-group d-flex justify-content-around bg-secondary"
+      class="form-group d-flex justify-content-around bg-dark"
     >
       <div>
-        <label for="productName">Product Name:</label>
+        <label class="text-white" for="productName">Product Name:</label>
         <input
           type="text"
           id="productName"
           name="productName"
-          class="form-control mb-2"
+          class="form-control mb-2 "
         />
       </div>
       <div>
-        <label for="productNumber">Product Number:</label>
+        <label class="text-white" for="productNumber ">Product Number:</label>
         <input
           type="text"
           id="productNumber"
@@ -38,9 +38,12 @@
       </div>
       <input type="submit" value="Add" class="btn btn-primary m-2" />
     </form>
-    <div class="products"></div>
+    <div class="products flex-column"></div>
     <script>
       let [products] = document.getElementsByClassName('products');
+      getAllData()
+        .then(res => res.json())
+        .then(data => showInDOM(data));
       let myForm = document.getElementById('myForm');
       myForm.addEventListener('submit', ev => {
         ev.preventDefault();
@@ -49,7 +52,7 @@
         if (data)
           sendData(data)
             .then(res => res.json())
-            .then(data => showInDOM(data, parent));
+            .then(data => showInDOM([data]));
       });
     </script>
   </body>
